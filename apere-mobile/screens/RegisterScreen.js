@@ -3,16 +3,15 @@ import { View, Text, StatusBar, TouchableOpacity, TextInput, StyleSheet, Alert }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 
 const RegisterScreen = () => {
-    const navigation = useNavigation();
+    const Navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [focused, setFocused] = useState(false);
 
     const goBack = () => {
-        navigation.navigate('onboarding'); 
+        Navigation.navigate('onboarding'); 
     };
 
     const validateEmail = (email) => {
@@ -28,35 +27,18 @@ const RegisterScreen = () => {
         setFocused(true);
     };
 
-    const fetchVerificationCode = async (email) => {
-        try {
-            const response = await axios.post('https://apere.onrender.com/api/v1/user/create-account', {email});
-            const verificationCode = response.data.code;
-            console.log(verificationCode);
-            return verificationCode;
-        }
-        catch (error) {
-            console.error('Failed to fetch verification code:', error);
-            throw error;
-        }
-    }
-
-    const handleRegister = async () => {
+    const handleRegister = () => {
         if (!validateEmail(email)) {
             setError('Please enter a valid email address.');
             setEmail('');
             setFocused(false); // Unfocus the input
-            return;
+        } else {
+            setError('');
+            // Navigate to the Verify screen if the email is valid
+            Navigation.navigate('Verify');
         }
-        setError(''); 
-        try {
-            const verificationCode = await fetchVerificationCode(email);
-            console.log(`Verification code: ${verificationCode}`);
-            navigation.navigate('Verify', { email, verificationCode });
-        } catch (error) {
-            Alert.alert('Failed to create account', 'Please try again later.');
-        }
-    }; 
+    };
+    
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>

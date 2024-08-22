@@ -47,19 +47,6 @@ const GroupBuy = () => {
                             <Text style={{fontSize: 16}}>N152000</Text>
                         </View>
                     </View>
-                    <View style= {styles.GroupContainer}>
-                        <View style={{marginTop: 10}}>
-                            <Text style={{fontSize: 16}}>Tade's Group</Text>
-                            <Text style={{fontSize: 11, color: '#727272'}}>15 Products</Text>
-                        </View>
-                        <View style={{alignItems: 'flex-end'}}>
-                        <Text style={{top: 10, fontSize: 8, left: 5, fontWeight: 'bold'}}>3</Text>
-                            <Image 
-                                source={require('../../assets/group-icon.png')}
-                            />
-                            <Text style={{fontSize: 16}}>N152000</Text>
-                        </View>
-                    </View>
                 </View>
             </ScrollView>
             <TouchableOpacity onPress ={openCreateGroupModal}>

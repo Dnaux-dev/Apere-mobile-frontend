@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Apere",
+    "platforms": ["ios", "android", "web"],
     "slug": "apere-mobile",
     "version": "1.0.0",
     "orientation": "portrait",

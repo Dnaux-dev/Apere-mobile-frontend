@@ -33,7 +33,7 @@ const CreateAccount = () => {
 
 
     const goBack = () => {
-        navigation.navigate('onboarding');
+        navigation.navigate('Onboarding');
     };
 
     const validateFirstName = (firstName) => {
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     button: {
-        marginTop: 'auto',
+        margin: 'auto',
         backgroundColor: '#38B000',
         width: 322,
         height: 62,

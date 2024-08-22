@@ -3,7 +3,7 @@ import { View, Text, StatusBar, TouchableOpacity, TextInput, StyleSheet } from '
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { firebase } from '../firebase.config';
+
 
 const LoginScreen = () => {
     const navigation = useNavigation();
@@ -55,18 +55,7 @@ const LoginScreen = () => {
         console.log('Valid email:', email);
         console.log('Password:', password);
 
-        try {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    console.log('User logged in successfully');
-                    navigation.navigate('Home');
-                })
-                .catch(error => {
-                    console.log('Error logging in:', error.message);
-                });
-        } catch (error) {
-            console.log('Error logging in:', error.message);
-        }
+       
     };
 
     const goToRegister = () => {

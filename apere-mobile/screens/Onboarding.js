@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, View, SafeAreaView, Image, StatusBar, TouchableOpacity, Dimensions, FlatList, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as RootNavigation from '../navigation/RootNavigation';
 
 const { width, height } = Dimensions.get('window');
- 
-const COLORS = { Primary: '#282534', white: '#fff', lightYellow: '#FFF5BE', lightGreen: '#BEFFC1'};
 
-const MARGIN ={marginLeft: 10}
+const COLORS = { Primary: '#282534', white: '#fff', lightYellow: '#FFF5BE', lightGreen: '#BEFFC1' };
+
+const MARGIN = { marginLeft: 10 }
 
 const slides = [
   {
@@ -48,33 +49,35 @@ const Slide = ({ item, index, currentSlideIndex }) => {
   return (
     <View style={[styles.slideContainer, { backgroundColor: item.backgroundColor }]}>
       <View>
-        <View  style={[styles.welcome]}>
+        <View style={[styles.welcome]}>
           <Image
             source={require('../assets/logo-new.png')}
             style={{ height: 45, width: 36, resizeMode: 'contain', marginTop: 10 }}
           />
           <TouchableOpacity>
-              <Text style={{ fontWeight: 600,  fontSize: 20, color: '#000', margin: 15 }}>
-                Welcome to Apere
-              </Text>
-            </TouchableOpacity>
+            <Text style={{ fontWeight: 600, fontSize: 20, color: '#000', margin: 15 }}>
+              Welcome to Apere
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ alignItems: 'center' }}>
         <Image
           source={item?.image}
-          style={{ height: 239, width: 239, resizeMode: 'contain', position: 'relative',  borderWidth: 2,
-          borderColor: 'black', borderRadius: 15}}
+          style={{
+            height: 239, width: 239, resizeMode: 'contain', position: 'relative', borderWidth: 2,
+            borderColor: 'black', borderRadius: 15
+          }}
         />
-          <View style={{ position: 'absolute', top: 30, left: 0, backgroundColor: '#000', width: 122, height: 21, alignItems: 'center', justifyContent: 'center', borderTopEndRadius: 10, borderBottomStartRadius: 10, borderTopStartRadius: 10 }}><Text style={{ color: slides[currentSlideIndex].backgroundColor, fontSize: 7}}>{item?.text1}</Text></View>
-          <View style={{ position: 'absolute', top:130 , right: 10, backgroundColor: '#000', width: 122, height: 21, alignItems: 'center', justifyContent: 'center', borderTopStartRadius: 10, borderTopEndRadius: 10, borderBottomEndRadius: 10 }}><Text style={{ color: slides[currentSlideIndex].backgroundColor, fontSize: 6}}>{item?.text2}</Text></View>
+        <View style={{ position: 'absolute', top: 30, left: 0, backgroundColor: '#000', width: 122, height: 21, alignItems: 'center', justifyContent: 'center', borderTopEndRadius: 10, borderBottomStartRadius: 10, borderTopStartRadius: 10 }}><Text style={{ color: slides[currentSlideIndex].backgroundColor, fontSize: 7 }}>{item?.text1}</Text></View>
+        <View style={{ position: 'absolute', top: 130, right: 10, backgroundColor: '#000', width: 122, height: 21, alignItems: 'center', justifyContent: 'center', borderTopStartRadius: 10, borderTopEndRadius: 10, borderBottomEndRadius: 10 }}><Text style={{ color: slides[currentSlideIndex].backgroundColor, fontSize: 6 }}>{item?.text2}</Text></View>
         <View style={{ position: 'absolute', bottom: 150, right: 0 }}>
-          <Image 
-            source={item?.imgObj1}       
+          <Image
+            source={item?.imgObj1}
           />
-          <Image 
+          <Image
             source={item?.imgObj2}
-            style={{right: 40, top: -18}}          
+            style={{ right: 40, top: -18 }}
           />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 30 }}>
@@ -99,13 +102,15 @@ const Slide = ({ item, index, currentSlideIndex }) => {
 };
 
 const Onboarding = () => {
-  const navigation = useNavigation();
+  const Navigation = useNavigation();
   const goToRegisterScreen = () => {
-    navigation.navigate('Register'); // Replace 'RegisterScreen' with the actual name of your screen
+    console.log("Navigating to Register Screen"); // Debugging line
+    Navigation.navigate('Register');
   };
 
+
   const goToLoginScreen = () => {
-    navigation.navigate('Login');
+    Navigation.navigate('Login');
   }
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -116,7 +121,7 @@ const Onboarding = () => {
       const nextIndex = (currentSlideIndex + 1) % slides.length;
       setCurrentSlideIndex(nextIndex);
       ref.current.scrollToIndex({ index: nextIndex, animated: true });
-    }, 4000); // Change this value to adjust the interval duration
+    }, 10000); 
 
     return () => clearInterval(interval);
   }, [currentSlideIndex]);
@@ -143,49 +148,50 @@ const Onboarding = () => {
     setCurrentSlideIndex(lastSlideIndex);
   };
 
- 
-  const Footer = ( item) => {
+
+  const Footer = (item) => {
     return (
       <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
         {currentSlideIndex === slides.length - 1 ? (
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 5}}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={[
-              styles.btn,
-              {
-                borderColor: '#000',
-                borderWidth: 1,
-                borderRadius: 30,
-                marginRight: 15,
-              },
-            ]}
-            onPress={goToLoginScreen}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 15,
-                color: '#000',
-              }}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={goToRegisterScreen}
-            style={[styles.btn, { backgroundColor:'#000', borderRadius: 30}]}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 15,
-                color: slides[currentSlideIndex].backgroundColor
-              }}>
-              SIGN UP
-            </Text>
-          </TouchableOpacity>
-        </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={[
+                styles.btn,
+                {
+                  borderColor: '#000',
+                  borderWidth: 1,
+                  borderRadius: 30,
+                  marginRight: 15,
+                },
+              ]}
+              onPress={goToLoginScreen}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                  color: '#000',
+                }}>
+                LOGIN
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={goToRegisterScreen}
+              style={[styles.btn, { backgroundColor: '#000', borderRadius: 30 }]}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                  color: slides[currentSlideIndex].backgroundColor
+                }}>
+                SIGN UP
+              </Text>
+            </TouchableOpacity>
+
+          </View>
         ) : (
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 5}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
             <TouchableOpacity
               activeOpacity={0.8}
               style={[
@@ -210,7 +216,7 @@ const Onboarding = () => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={goToNextSlide}
-              style={[styles.btn, { backgroundColor:'#000', borderRadius: 30}]}>
+              style={[styles.btn, { backgroundColor: '#000', borderRadius: 30 }]}>
               <Text
                 style={{
                   fontWeight: 'bold',
@@ -266,7 +272,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     maxWidth: 345,
-   alignItems: 'flex-start',
+    alignItems: 'flex-start',
     lineHeight: 23,
   },
   title: {
@@ -276,7 +282,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 300,
     alignItems: 'flex-start',
-    
+
   },
   indicator: {
     height: 2.5,
